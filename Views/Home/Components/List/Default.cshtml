@@ -1,0 +1,16 @@
+@model List<ListDemo.Models.ListItem>
+
+<ul id="list" class="col">
+    @foreach(ListDemo.Models.ListItem movie in Model){
+        <li class="row" onclick="app.listItemClick('@movie.Id', '@movie.Url', @movie.Element, this, event)">
+            <div class="col">
+                <div class="row text">
+                    @movie.Text
+                </div>
+                <div class="row sub-text">
+                    @movie.SubText
+                </div>
+            </div>
+        </li>
+    }
+</ul>

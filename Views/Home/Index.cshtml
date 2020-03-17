@@ -1,0 +1,40 @@
+﻿@using ListDemo.Models
+
+@{
+    ViewData["Title"] = "List Demo";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section Scripts
+{
+    <script type="text/javascript">
+            const app = {
+
+                listItemClick: function(id, url, actionElement, element, event) {
+                    $.post(url, { id }, function(res){
+                        $(actionElement).html(res);
+                    })
+                },
+
+                searchKeyup: function(url, element, event){
+                    if ((event.keyCode == 13)) {
+                        $.post(url, { searchText: $(element).val() }, function(res){
+                            console.log(res);
+                            $('#list').replaceWith(res);
+                        })
+                    }
+                }
+
+            }
+    </script>
+}
+
+<div class="row tab">
+    <input type="text" placeholder="Search..." onkeyup="app.searchKeyup('@Url.Action("MovieList", "Home")', this, event)" />
+</div>
+
+<div id="content" class="row">
+    @await Component.InvokeAsync("MovieList", new { type = "Movie" })
+    <div id="detail" class="col">
+        
+    </div>
+</div>
